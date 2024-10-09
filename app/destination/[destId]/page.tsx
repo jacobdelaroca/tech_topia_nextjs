@@ -1,8 +1,5 @@
 import React from 'react'
 
-interface DestId{
-    destId: string
-}
 
 const Destination = ({params}: any) => {
   return (

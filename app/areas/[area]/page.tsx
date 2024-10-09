@@ -1,7 +1,7 @@
-import { gte, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import React from 'react'
 import { db } from '../../../src/index';
-import {passengerNotifTable, route, routesToAreas, area} from '../../../src/db/schema';
+import { route, routesToAreas, area} from '../../../src/db/schema';
 
 const Area = async ({params}: any) => {
     const area_name = await db

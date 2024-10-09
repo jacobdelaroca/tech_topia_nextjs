@@ -1,8 +1,6 @@
-import { gte, eq } from 'drizzle-orm';
-import * as schema from '../../src/db/schema';
-import {passengerNotifTable, route, area, routesToAreas} from '../../src/db/schema';
+import { eq } from 'drizzle-orm';
+import { route, area, routesToAreas} from '../../src/db/schema';
 import { db } from '../../src/index';
-import { datetime } from 'drizzle-orm/mysql-core';
 
 export default async function TestComp() {
 
