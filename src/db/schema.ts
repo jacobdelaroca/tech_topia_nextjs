@@ -21,12 +21,6 @@ export const postsTable = pgTable('posts_table', {
   .$onUpdate(() => new Date()),
 });
 
-export const passengerNotifTable = pgTable("passenger_notif_table", {
-    id: serial('id').primaryKey(),
-    route: text('route').notNull(),
-    area: text('area').notNull(),
-    timestamp: timestamp('timestamp').defaultNow(),
-})
 
 export const route = pgTable("route", {
     id: serial('id').primaryKey(),
@@ -34,14 +28,15 @@ export const route = pgTable("route", {
 })
 
 export const routeRelations = relations(route, ({ many }) => ({
-    routesToAreas: many(routesToAreas),
+  routesToAreas: many(routesToAreas),
 }));
 
 
 export const area = pgTable("area", {
-    id: serial('id').primaryKey(),
-    name: text("name").notNull()
+  id: serial('id').primaryKey(),
+  name: text("name").notNull()
 })
+
 
 export const areaRelations = relations(area, ({ many }) => ({
     routesToAreas: many(routesToAreas),
@@ -52,15 +47,34 @@ export const routesToAreas = pgTable(
     {
       routeId: integer('route_id')
         .notNull()
-        .references(() => route.id),
+        .references(() => route.id, {onDelete:"cascade"}),
       areaId: integer('area_id')
         .notNull()
-        .references(() => area.id),
+        .references(() => area.id, {onDelete:'cascade'}),
     },
     (t) => ({
       pk: primaryKey({ columns: [t.routeId, t.areaId] }),
     }),
   );
+
+
+  export const passengerNotifTable = pgTable("passenger_notif_table", {
+    id: serial('id').primaryKey(),
+    route: integer('route').notNull(),
+    area: integer('area').notNull(),
+    timestamp: timestamp('timestamp').defaultNow(),
+})
+
+export const passengerNotifRelations = relations(passengerNotifTable, ({ one }) => ({
+  routeRelation: one(route, {
+      fields: [passengerNotifTable.route],
+      references: [route.id],
+  }),
+  areaRelation: one(area, {
+      fields: [passengerNotifTable.area],
+      references: [area.id],
+  }),
+}));
 
 export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;

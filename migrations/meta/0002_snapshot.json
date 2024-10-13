@@ -1,6 +1,6 @@
 {
-  "id": "64368e00-2f1c-4371-87c9-f637f219e8c1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "37ba3b63-6947-4dd9-a848-b94a2a4137fd",
+  "prevId": "70b38dac-ba33-42d9-a65c-17574d0c60f6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -57,34 +57,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "passenger_notif_table_route_route_id_fk": {
-          "name": "passenger_notif_table_route_route_id_fk",
-          "tableFrom": "passenger_notif_table",
-          "tableTo": "route",
-          "columnsFrom": [
-            "route"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "passenger_notif_table_area_area_id_fk": {
-          "name": "passenger_notif_table_area_area_id_fk",
-          "tableFrom": "passenger_notif_table",
-          "tableTo": "area",
-          "columnsFrom": [
-            "area"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -200,7 +173,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "routes_to_areas_area_id_area_id_fk": {
@@ -213,7 +186,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },

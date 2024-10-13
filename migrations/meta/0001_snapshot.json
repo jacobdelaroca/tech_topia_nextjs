@@ -1,6 +1,6 @@
 {
-  "id": "842c7803-a2b4-4e9f-bc5b-63f97e42d265",
-  "prevId": "974dd83e-7921-487b-9882-18089b223cc2",
+  "id": "70b38dac-ba33-42d9-a65c-17574d0c60f6",
+  "prevId": "64368e00-2f1c-4371-87c9-f637f219e8c1",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -38,13 +38,13 @@
         },
         "route": {
           "name": "route",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
         "area": {
           "name": "area",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -57,7 +57,34 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "passenger_notif_table_route_route_id_fk": {
+          "name": "passenger_notif_table_route_route_id_fk",
+          "tableFrom": "passenger_notif_table",
+          "tableTo": "route",
+          "columnsFrom": [
+            "route"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "passenger_notif_table_area_area_id_fk": {
+          "name": "passenger_notif_table_area_area_id_fk",
+          "tableFrom": "passenger_notif_table",
+          "tableTo": "area",
+          "columnsFrom": [
+            "area"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -173,7 +200,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "routes_to_areas_area_id_area_id_fk": {
@@ -186,7 +213,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },

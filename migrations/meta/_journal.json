@@ -5,15 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1728295222376,
-      "tag": "0000_daffy_alex_power",
+      "when": 1728746645253,
+      "tag": "0000_curvy_king_cobra",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1728312010291,
-      "tag": "0001_regular_hulk",
+      "when": 1728748238539,
+      "tag": "0001_elite_scorpion",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1728749163271,
+      "tag": "0002_next_silver_centurion",
       "breakpoints": true
     }
   ]
