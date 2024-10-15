@@ -1,6 +1,7 @@
 import {  NextResponse } from 'next/server';
 import { db } from '../../../src/index';
 import { passengerNotifTable } from '@/src/db/schema';
+import { AREA_LOCATION, Location } from '@/app/_constants/constants';
  
 export async function POST(
   req: Request
@@ -14,8 +15,13 @@ export async function POST(
     const lat: number = Number(data["lat"]);
     const lng: number = Number(data["lng"]);
 
-    if(lat > 0 && lng > 0){
+    if(lat < 0 && lng < 0){
       console.log("invalid");
+    } else {
+      const [area] = AREA_LOCATION.filter((loc: Location) => loc.name === "STI") 
+      const dist = Math.sqrt(Math.pow(Number(area.lat) - lat, 2) + Math.pow(Number(area.lng) - lng, 2))
+      console.log(lat, lng);
+      console.log(dist);
     }
 
     // console.log("api server", routeId, areaId, lat, lng);
