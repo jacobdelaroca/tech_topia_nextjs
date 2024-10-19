@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import { getSession, updateSession } from "./app/lib";
+import { redirect } from "next/navigation";
 
 const MS_PER_MIN = 60000;
 const INTERVAL_BETWEEN_REQS_IN_MINS = 10;
@@ -18,13 +20,23 @@ export default async function middleware(req: NextRequest) {
                 }
             }
         } else {
-            // res.cookies.set("req-time", new Date().toISOString())
-            // console.log("cookcies set")
+            res.cookies.set("req-time", new Date().toISOString())
+            console.log("cookcies set")
         }
     }
+    if(req.nextUrl.pathname.startsWith("/admin/dashboard")){
+        const session = await getSession();
+        // check validity here
+        console.log(session);
+        if(session === null){
+            return NextResponse.redirect(new URL("/admin/unauthorized", req.url));
+        }
+        // return await updateSession(req);
+    }
+
     return res;
 }
 
 export const config = {
-    matcher: ["/areas/(.*)", "/destination/(.*)"]
+    matcher: ["/areas/(.*)", "/destination/(.*)", "/admin/(.*)"]
 }

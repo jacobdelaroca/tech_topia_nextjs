@@ -22,6 +22,13 @@
       "when": 1728749163271,
       "tag": "0002_next_silver_centurion",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729343690236,
+      "tag": "0003_thankful_night_thrasher",
+      "breakpoints": true
     }
   ]
 }

@@ -52,7 +52,7 @@ const ClientSubmit: React.FC<Props> = ({routes, areaId}) => {
          
             // Handle response if necessary
             const data = await response.json()
-            router.push(`/destination/${data.next}`)
+            router.replace(`/destination/${data.next}`)
         } else {
             alert("Location Data is needed");
             return;

@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { integer, pgTable, serial, text, timestamp, primaryKey } from 'drizzle-orm/pg-core';
+import { integer, pgTable, serial, text, timestamp, primaryKey, numeric } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable('users_table', {
   id: serial('id').primaryKey(),
@@ -24,17 +24,21 @@ export const postsTable = pgTable('posts_table', {
 
 export const route = pgTable("route", {
     id: serial('id').primaryKey(),
-    name: text("name").notNull()
-})
-
-export const routeRelations = relations(route, ({ many }) => ({
-  routesToAreas: many(routesToAreas),
-}));
-
-
-export const area = pgTable("area", {
-  id: serial('id').primaryKey(),
-  name: text("name").notNull()
+    name: text("name").notNull(),
+    lat: numeric("lat").notNull(),
+    lng: numeric("lng").notNull(),
+  })
+  
+  export const routeRelations = relations(route, ({ many }) => ({
+    routesToAreas: many(routesToAreas),
+  }));
+  
+  
+  export const area = pgTable("area", {
+    id: serial('id').primaryKey(),
+    name: text("name").notNull(),
+    lat: numeric("lat").notNull(),
+    lng: numeric("lng").notNull(),
 })
 
 

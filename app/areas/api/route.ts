@@ -18,19 +18,20 @@ export async function POST(
     if(lat < 0 && lng < 0){
       console.log("invalid");
     } else {
-      const [area] = AREA_LOCATION.filter((loc: Location) => loc.name === "STI") 
-      const dist = Math.sqrt(Math.pow(Number(area.lat) - lat, 2) + Math.pow(Number(area.lng) - lng, 2))
+      const [area] = AREA_LOCATION.filter((loc: Location) => loc.name === "STI");
+      const dist = Math.sqrt(Math.pow(Number(area.coords[0]) - lat, 2) + Math.pow(Number(area.coords[1]) - lng, 2))
       console.log(lat, lng);
       console.log(dist);
     }
 
-    // console.log("api server", routeId, areaId, lat, lng);
     await db.insert(passengerNotifTable).values({
         route: routeId, // Assuming you have a valid route id
         area:  areaId  // Assuming you have a valid area id
         // The `timestamp` will automatically default to the current time
     });
+
     return NextResponse.json({
       next: routeId
     });
 }
+
