@@ -27,7 +27,7 @@ export default async function middleware(req: NextRequest) {
     if(req.nextUrl.pathname.startsWith("/admin/dashboard")){
         const session = await getSession();
         // check validity here
-        console.log(session);
+        // console.log(session);
         if(session === null){
             return NextResponse.redirect(new URL("/admin/unauthorized", req.url));
         }

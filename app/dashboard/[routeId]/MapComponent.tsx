@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import "./styles.css";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import { Route } from '@/app/admin/serverActions';
 
 import { DivIcon, Icon, LatLngExpression, divIcon, point } from "leaflet";
 import { MAP_ICON_GRID_WIDTH, OFFSET } from '@/app/_constants/constants';
-
+import { getRoutesCoord } from './serverActions';
 
 const formatTimeFromISOString = (isoString: string): string => {
   const date = new Date(isoString);
@@ -15,7 +16,7 @@ const formatTimeFromISOString = (isoString: string): string => {
   // Extract hours and minutes
   let hours = date.getHours();
   const minutes = date.getMinutes().toString().padStart(2, '0'); // Add leading zero if necessary
-  
+
   // Determine AM/PM suffix
   const ampm = hours >= 12 ? 'PM' : 'AM';
 
@@ -28,7 +29,7 @@ const formatTimeFromISOString = (isoString: string): string => {
 };
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-//   iconUrl: require("./placeholder.png"),
+  //   iconUrl: require("./placeholder.png"),
   iconSize: [38, 38] // size of the icon
 });
 
@@ -57,94 +58,134 @@ interface GroupedItem {
 }
 
 const createClusterCustomIcon = function (cluster: any): DivIcon {
-  
+
   return divIcon({
     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
     className: "custom-marker-cluster",
     iconSize: point(33, 33, true)
   });
 };
+const MoveMapView = ({ lat, lng }: { lat: number; lng: number }) => {
+  const map = useMap();
 
-const Dashboard = ({params}: {params: {routeId: string}}) => {
-
-  const [route_Id, minutes] = params.routeId.split('-');
-  console.log(params.routeId.split('-'));
-  const [notifs, setNotifs] = useState<GroupedItem[]>([]);
   useEffect(() => {
-    
-      const intervalID = setInterval( async () => {
-          fetch(`api/latest_passengers/${route_Id}-${minutes}`, { cache: 'no-store' })
-          .then(response => {
-            if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
-              return response.json(); // Parse the JSON from the response
-          })
-          .then(result => {
-              const items: GroupedItem[] = result.reduce((acc: GroupedItem[], curr: DataItem) => {
-                const { id, name, lat, lng } = curr.area;
-                const notif = curr.passenger_notif_table;
-              
-                const existingArea = acc.find(item => item.area.id === id);
-                if (existingArea) {
-                  existingArea.passenger_notifs.push(notif);
-                } else {
-                  acc.push({
-                    area: { id, name, lat, lng },
-                    passenger_notifs: [notif]
-                  });
-                }
-              
-                return acc;
-              }, []);
-              setNotifs(items); // Set loading to false
-              console.log(result);
-          })
-          .catch(error => {
-              console.log(error)
-          })
-        }, 2000);
+    // Move the view to the specified latitude and longitude
+    map.setView([lat, lng], map.getZoom()); // Use current zoom level
+  }, [lat, lng, map]);
 
-        return () => {
-            clearInterval(intervalID);
-        }
-  }, [])
+  return null; // This component doesn't render anything
+};
+
+const Dashboard = ({ params, coords, routes }: { params: { routeId: string }, coords: number[], routes: Route[] }) => {
+
+  const [route_Id_intitial, minutes_intitial] = params.routeId.split('-');
+  // console.log(params.routeId.split('-'));
+
+  const [notifs, setNotifs] = useState<GroupedItem[]>([]);
+  const [routeId, setRouteId] = useState<number>(Number(route_Id_intitial));
+  const [minutes, setMinutes] = useState<number>(Number(minutes_intitial));
+  const [viewCenter, setViewCenter] = useState<number[]>(coords);
+
+  useEffect(() => {
+
+    const intervalID = setInterval(async () => {
+      fetch(`api/latest_passengers/${routeId}-${minutes}`, { cache: 'no-store' })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json(); // Parse the JSON from the response
+        })
+        .then(result => {
+          const items: GroupedItem[] = result.reduce((acc: GroupedItem[], curr: DataItem) => {
+            const { id, name, lat, lng } = curr.area;
+            const notif = curr.passenger_notif_table;
+
+            const existingArea = acc.find(item => item.area.id === id);
+            if (existingArea) {
+              existingArea.passenger_notifs.push(notif);
+            } else {
+              acc.push({
+                area: { id, name, lat, lng },
+                passenger_notifs: [notif]
+              });
+            }
+
+            return acc;
+          }, []);
+          setNotifs(items); // Set loading to false
+          console.log(result);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }, 200000);
+
+    return () => {
+      clearInterval(intervalID);
+    }
+  }, [routeId, minutes])
 
 
 
   return (
-    <div>
-      <MapContainer center={[13.688696, 121.059264]} zoom={13.2}>
-      {/* OPEN STREEN MAPS TILES */}
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
+    <div className='w-full mt-6'>
+      <h1 className='text-center text-3xl my-6'>Map Dashboard</h1>
+      <div className='flex text-xl justify-evenly'>
+          <div className='flex flex-col justify-start p-8 w-[15%]'>
+          <div className='text-xl'>
+              <h2>Showing passenger withing the last {minutes} minutes</h2>
+              <h2 className='text-lg pt-1'>Select minutes</h2>
+              <input className='w-full py-4' type="range" name="minutes" id="minute-slider" min={2} max={60} value={minutes} onChange={e => { setMinutes(Number(e.target.value)); }} />
+            </div> 
+            <h2>Select Route to show</h2>
+            <select className='border h-16' onChange={async (e) => {
+              const newCenter = await getRoutesCoord(Number(e.target.value));
+              setViewCenter(newCenter);
+              console.log("new center", newCenter);
+              setRouteId(Number(e.target.value))
+            }}>
+              <option value="">Select a Route</option>
+              {routes.map((route) => (
+                <option key={route.id} value={route.id}>
+                  {route.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <MapContainer center={viewCenter as LatLngExpression} zoom={14.5}>
+            {/* OPEN STREEN MAPS TILES */}
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-        {notifs.map((item: GroupedItem) => (
-          <MarkerClusterGroup key={`group-${item.area.id}`}
-          chunkedLoading
-          iconCreateFunction={createClusterCustomIcon}
-        >
-          {/* Mapping through the markers */}
-          {item.passenger_notifs.map((notif, y:number) => 
-            {
-            //   const [lat, lng] = AREA_LOCATION.filter(area => area.name === item.area.name)[0].coords;
-              return (
-                <Marker key={`marker-${notif.id}`} position={[Number(item.area.lat) + OFFSET * y, Number(item.area.lng) + OFFSET * (y%MAP_ICON_GRID_WIDTH)] as LatLngExpression} icon={customIcon}>
-                  <Popup>{formatTimeFromISOString(notif.timestamp)}</Popup>
-                </Marker>
-              );
-            }
-          )}
-        </MarkerClusterGroup>
-        ))}
+            {notifs.map((item: GroupedItem) => (
+              <MarkerClusterGroup key={`group-${item.area.id}`}
+                chunkedLoading
+                iconCreateFunction={createClusterCustomIcon}
+              >
+                {/* Mapping through the markers */}
+                {item.passenger_notifs.map((notif, y: number) => {
+                  //   const [lat, lng] = AREA_LOCATION.filter(area => area.name === item.area.name)[0].coords;
+                  return (
+                    <Marker key={`marker-${notif.id}`} position={[Number(item.area.lat) + OFFSET * y, Number(item.area.lng) + OFFSET * (y % MAP_ICON_GRID_WIDTH)] as LatLngExpression} icon={customIcon}>
+                      <Popup>{formatTimeFromISOString(notif.timestamp)}</Popup>
+                    </Marker>
+                  );
+                }
+                )}
+              </MarkerClusterGroup>
+            ))}
+            <MoveMapView lat={viewCenter[0]} lng={viewCenter[1]}></MoveMapView>
 
-    </MapContainer>
-      {/* <ul>
-        {notifs.map((notif: Notifs) => <li key={String(notif.passenger_notif_table.id)}>{notif.area.name}</li>)}
-      </ul> */}
-    </div>
+          </MapContainer>
+          {/* <ul>
+            {notifs.map((notif: Notifs) => <li key={String(notif.passenger_notif_table.id)}>{notif.area.name}</li>)}
+          </ul> */}
+        </div>
+
+      </div>
   )
 }
 
