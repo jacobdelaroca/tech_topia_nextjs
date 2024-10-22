@@ -11,7 +11,7 @@ export default async function Page() {
           action={async (formData) => {
             "use server";
             const success: boolean = await login(formData);
-            if(success) redirect("/");
+            if(success) redirect("/admin/dashboard");
           }}
         >
           <input type="password" placeholder="Password" name="password" />

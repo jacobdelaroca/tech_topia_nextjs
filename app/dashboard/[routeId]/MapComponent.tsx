@@ -150,8 +150,8 @@ const Dashboard = ({ params, coords, routes, areasInit }: { params: { routeId: s
   return (
     <div className='w-full mt-6 px-2 '>
       <h1 className='text-center text-4xl my-6'>Map Dashboard</h1>
-      <div className='flex text-xl justify-center'>
-        <div className='flex flex-col text-3xl justify-start p-2 w-[20%]'>
+      <div className='flex text-xl flex-col lg:flex-row justify-center'>
+        <div className='flex flex-col text-3xl justify-start p-2 lg:w-[20%] w-full'>
           <div className='text-3xl border-2 p-4 border-main rounded-md bg-white shadow-lg'>
             <h2 className='border-b-2 border-main mb-2 pb-2'>Showing passenger within the last <span className='min-w-32 text-main'>{minutes}</span>  minutes</h2>
             <h2 className='pt-1'>Select minutes</h2>
@@ -179,7 +179,7 @@ const Dashboard = ({ params, coords, routes, areasInit }: { params: { routeId: s
             <input className='w-8 h-8 m-2' type="checkbox" name="" id="" checked={showAreaMarkers} onChange={e => setShowAreaMarker(e.target.checked)} />
           </div>
         </div>
-        <div className='flex flex-col justify-start p-3 w-[90%] border-2 border-main rounded-3xl'>
+        <div className='flex flex-col justify-start p-3 lg:w-[90%] w-[100%] border-2 border-main rounded-3xl'>
           <MapContainer center={viewCenter as LatLngExpression} zoom={14.5} className=''>
             {/* OPEN STREEN MAPS TILES */}
             <TileLayer

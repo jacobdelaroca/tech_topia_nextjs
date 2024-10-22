@@ -9,7 +9,6 @@ const Admin = () => {
     const form = event.target as HTMLFormElement;
     const data = new FormData(form);
     await action(data);
-    alert("Entry Created.");
     form.reset();
 
   }
@@ -101,7 +100,7 @@ const Admin = () => {
           <div className='flex flex-row h-full'>
             <div className='border border-main rounded-md p-6 flex-1 bg-white m-2 shadow-lg'>
               <h2 className='text-2xl text-center pb-2 border-b-2 border-main'>ROUTES</h2>
-              <div className='overflow-y-scroll mt-6 '>
+              <div className='overflow-y-scroll mt-6 max-h-[55vh] p-1'>
               <div className='w-full px-2 grid grid-cols-5'>
                     <h1 className='col-span-2'>Name</h1>
                     <h1>Latitude</h1>
@@ -119,7 +118,7 @@ const Admin = () => {
             </div>
             <div className='border border-main rounded-md p-6 flex-1 bg-white m-2 shadow-lg'>
               <h2 className='text-2xl text-center pb-2 border-b-2 border-main'>AREAS</h2>
-              <div className='overflow-y-scroll max-h-[75vh] mt-6 p-3'>
+              <div className='overflow-y-scroll max-h-[55vh] mt-6 p-1'>
 
                   <div className='w-full px-2 grid grid-cols-5'>
                     <h1 className='col-span-2'>Name</h1>

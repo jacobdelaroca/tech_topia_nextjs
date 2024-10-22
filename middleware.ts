@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getSession, updateSession } from "./app/lib";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 const MS_PER_MIN = 60000;
 const INTERVAL_BETWEEN_REQS_IN_MINS = 10;
@@ -8,6 +8,12 @@ const INTERVAL_BETWEEN_REQS_IN_MINS = 10;
 export default async function middleware(req: NextRequest) {
     const res = NextResponse.next();
 
+    if(req.nextUrl.pathname.startsWith("/destination")){
+        if(req.cookies.get("request-success")?.value === "true"){
+            res.cookies.set("req-time", new Date().toISOString())
+            console.log("cookcies set")
+        } 
+    }
     if(req.nextUrl.pathname.startsWith("/areas")){
         
         if(req.body === null){
@@ -19,9 +25,6 @@ export default async function middleware(req: NextRequest) {
                     return NextResponse.redirect(new URL("/cooldown", req.url));
                 }
             }
-        } else {
-            res.cookies.set("req-time", new Date().toISOString())
-            console.log("cookcies set")
         }
     }
     if(req.nextUrl.pathname.startsWith("/admin/dashboard")){

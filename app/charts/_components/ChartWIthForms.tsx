@@ -20,8 +20,8 @@ const ChartWIthForms = ({ items, table }: { items: { name: string, id: number }[
     }, [itemId, date])
     return (
         <div className=''>
-            <h1 className='text-4xl text-center mt-10'>{table.toUpperCase()} History</h1>
-            <div className='grid grid-cols-10 p-2'>
+            <h1 className='lg:text-4xl text-3xl text-center mt-10'>{table.toUpperCase()} History</h1>
+            <div className='grid lg:grid-cols-10 grid-cols-1 p-2'>
                 <div className='col-span-1'></div>
                 <div className='col-span-2 flex flex-col p-6 text-2xl'>
                     <label htmlFor="dropdown" className='text-3xl py-3'>Choose {table}:</label>

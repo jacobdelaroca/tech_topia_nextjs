@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import topShape from "@/assets/top_shape.png"
 import TopNav from "./_components/TopNav";
+import desktopBG from "@/assets/desktopBG.png"
 
 
 const teachers = localFont({
@@ -21,23 +21,31 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const divStyle: React.CSSProperties = {
-    backgroundImage: `url(${topShape.src})`,
-    backgroundSize: '',
+  // const divStyle: React.CSSProperties = {
+  //   backgroundImage: `url(${topShape.src})`,
+  //   backgroundSize: '',
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundPosition: 'center',
+  // };
+  const BGStyle: React.CSSProperties = {
+    backgroundImage: `url(${desktopBG.src})`,
+    backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: 'center',
+    backgroundPosition: '30% center',
+    backgroundAttachment: "fixed"
   };
   return (
     <html lang="en">
       <body
-        className={`${teachers.className} antialiased bg-orange-50`}
+      style={BGStyle}
+        className={`${teachers.className} antialiased bg-orange-50 lg:bg-bottom`}
       >
         <TopNav></TopNav>
       
 
 
-      <nav className="h-[10vh] p-3 bg-accent lg:hidden block" style={divStyle}>
-      </nav>
+      {/* <nav className="h-[10vh] p-3 bg-accent lg:hidden block" style={divStyle}>
+      </nav> */}
         {children}
       </body>
     </html>

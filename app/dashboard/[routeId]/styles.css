@@ -18,7 +18,7 @@
   
   /* height of the container */
   .leaflet-container {
-    height: 80vh;
+    height: 75vh;
     width: 100%;
     border-radius: 2rem;
   }
@@ -36,3 +36,11 @@
     box-shadow: 0 0 0px 5px #fff;
   }
   
+  @media only screen and (max-width: 480px) {
+    /* Styles for smaller mobile screens */
+    .leaflet-container {
+      height: 90vh;
+      width: 100%;
+      border-radius: 2rem;
+    }
+  }

@@ -13,6 +13,7 @@ const config: Config = {
         foreground: "var(--foreground)",
         main: "#f37335",
         accent: "#fdc830",
+        accent2: "#ffb001",
       },
     },
   },

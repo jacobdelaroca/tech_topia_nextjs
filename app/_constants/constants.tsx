@@ -1,6 +1,6 @@
 import image from '@/assets/main_bg.png'
 
-export const MINIMUM_DISTANCE: number = 0.00082758987427953;
+export const MAXIMUM_DISTANCE: number = 0.0023807342744379643;
 
 export interface Location {
     name: string,
@@ -9,6 +9,7 @@ export interface Location {
 
 export const mainColor = "#f37335"
 export const accentColor = "#fdc830"
+export const accentColor2 = "#ffb001"
 
 
 export const divStyle: React.CSSProperties = {
