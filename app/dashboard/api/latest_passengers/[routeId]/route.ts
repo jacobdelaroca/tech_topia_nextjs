@@ -21,7 +21,7 @@ export async function GET(request: Request, context: any) {
         )
     
         // console.log(timePeriod);
-        console.log(passNotif);
+        // console.log(passNotif);
     
         return NextResponse.json(passNotif);
         

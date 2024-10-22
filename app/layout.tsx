@@ -1,17 +1,15 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import topShape from "@/assets/top_shape.png"
+import TopNav from "./_components/TopNav";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
+
+const teachers = localFont({
+  src: "./fonts/Teachers-VariableFont_wght.ttf",
   weight: "100 900",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,12 +21,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const divStyle: React.CSSProperties = {
+    backgroundImage: `url(${topShape.src})`,
+    backgroundSize: '',
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: 'center',
+  };
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${teachers.className} antialiased bg-orange-50`}
       >
-      <nav className="h-16 bg-orange-400"></nav>
+        <TopNav></TopNav>
+      
+
+
+      <nav className="h-[10vh] p-3 bg-accent lg:hidden block" style={divStyle}>
+      </nav>
         {children}
       </body>
     </html>

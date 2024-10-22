@@ -1,13 +1,28 @@
-export const MINIMUM_DISTANCE: number = 0.0001;
+import image from '@/assets/main_bg.png'
+
+export const MINIMUM_DISTANCE: number = 0.00082758987427953;
 
 export interface Location {
     name: string,
     coords: number[]
 }
 
-export const OFFSET: number = 0.0003;
+export const mainColor = "#f37335"
+export const accentColor = "#fdc830"
 
-export const MAP_ICON_GRID_WIDTH: number = 3;
+
+export const divStyle: React.CSSProperties = {
+    backgroundImage: `url(${image.src})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'bottom',
+    height: "100%",
+    backgroundAttachment: "fixed",
+    minHeight: "90vh"
+  };
+
+export const OFFSET: number = 0.00009;
+
+export const MAP_ICON_GRID_WIDTH: number = 6;
 
 export const AREA_LOCATION: Location[]  = [
     {

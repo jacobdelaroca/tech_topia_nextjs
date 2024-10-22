@@ -1,20 +1,17 @@
 "use client";
 import React from 'react'
-import useGeoLocation from './_hooks/useGeolocation'
+import DefaulQRScanPrompt from '../_components/BackgroundMobile/DefaulQRScanPrompt';
 
-interface location{
-    loaded: boolean,
-    coordinates: {lat: string, lng: string} | null,
-    error: null | any
-}
+// interface location{
+//     loaded: boolean,
+//     coordinates: {lat: string, lng: string} | null,
+//     error: null | any
+// }
 
 
 const GetLocation = () => {
-    const location: location = useGeoLocation();
     return (
-        <div>
-            {JSON.stringify(location)}
-        </div>
+        <DefaulQRScanPrompt />
     )
 }
 

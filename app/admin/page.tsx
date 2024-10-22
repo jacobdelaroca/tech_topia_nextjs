@@ -10,7 +10,7 @@ const AdminDashboard = async () => {
     }
     return (
     <div>
-        
+        dashboard
     </div>
   )
 }

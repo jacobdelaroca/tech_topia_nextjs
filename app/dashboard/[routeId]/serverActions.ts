@@ -8,3 +8,9 @@ export const getRoutesCoord = async (routeId: number) => {
     const coord = [Number(routeItem[0].lat), Number(routeItem[0].lng)];
     return coord; 
 }
+
+export const checkRouteId = async (routeId: number) => {
+    const routeItem = await db.select().from(route).where(eq(route.id, routeId)).limit(1);
+    return (routeItem.length > 0); 
+}
+

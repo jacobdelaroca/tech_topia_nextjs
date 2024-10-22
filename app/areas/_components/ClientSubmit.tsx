@@ -63,14 +63,17 @@ const ClientSubmit: React.FC<Props> = ({routes, areaId}) => {
     console.log("routes", routes);
 
   return (
-    <div>
+    <div className='flex h-full justify-center items-center flex-col'>
       {routes && routes.map((route: any) => {
         console.log(route);
         return(
-            <form key={stringify(route.id)} onSubmit={submitForm} >
+            <form className='w-full flex flex-col items-center' key={stringify(route.id)} onSubmit={submitForm} >
                 <input type="hidden" name="areaId"  value={areaId}/>
                 <input type="hidden" name="routeId" value={route.route_id}/>
-                <input type="submit" value={route.route_name} className='w-10 h-5 border bg-green-400'/>
+                <div className='border-2 border-main w-2/3 p-2 m-2'>
+                  <input type="submit" value={route.route_name} className='w-full h-12 border bg-main'/>
+
+                </div>
             </form>
         )
       })}

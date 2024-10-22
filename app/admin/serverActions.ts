@@ -37,7 +37,7 @@ export const addAreaToRoute = async (data: FormData) => {
     })
 }
 export const getAreas = async () => {
-    const areas = await db.select({id: area.id, name:area.name}).from(area);
+    const areas = await db.select().from(area);
     // console.log(areas);
     return areas;
 }
@@ -48,13 +48,30 @@ export const getRoutes = async () => {
     
 }
 
+export const UpdateItem = async (data: FormData) => {
+    console.log("data", {
+        name: String(data.get("name")),
+        lat: String(data.get("lat")),
+        lng: String(data.get("lng")),
+        id: Number(data.get("id"))
+    })
+    const tableType = (data.get("table") === "route") ? route:area;
+    const res = await db.update(tableType).set({
+        name: String(data.get("name")),
+        lat: String(data.get("lat")),
+        lng: String(data.get("lng"))
+    }).where(eq(tableType.id, Number(data.get("id"))))
+    console.log("result:", res);
+}
+
+
 export const getRoutesWithAreas = async () => {
     const areasAssociation = await db.select()
     .from(routesToAreas)
     .fullJoin(area, eq(area.id, routesToAreas.areaId))
     .fullJoin(route, eq(route.id, routesToAreas.routeId));
     const routesWithAreas = reduceRoutes(areasAssociation);
-    console.log(JSON.stringify(routesWithAreas));
+    // console.log(JSON.stringify(routesWithAreas));
     return routesWithAreas;
 }
 
@@ -87,6 +104,7 @@ export interface Route {
     lng: string;
     areas?: Area[];
   }
+
   
 export interface Area {
     id: number;

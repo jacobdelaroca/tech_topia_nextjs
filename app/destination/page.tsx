@@ -1,10 +1,9 @@
 import React from 'react'
+import DefaulQRScanPrompt from '../_components/BackgroundMobile/DefaulQRScanPrompt'
 
 const DestinationEmpty = () => {
   return (
-    <div>
-        please select Destination
-    </div>
+    <DefaulQRScanPrompt></DefaulQRScanPrompt>
   )
 }
 

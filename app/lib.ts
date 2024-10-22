@@ -22,8 +22,9 @@ export async function decrypt(input: string): Promise<any> {
 
 export async function login(formData: FormData) {
   // Verify credentials && get the user
-
-  const user = { email: formData.get("email"), name: "John" };
+  const password = formData.get("password")
+  if(password !== "admin") return false;
+  const user = {  name: "Admin" };
 
   // Create the session
   const expires = new Date(Date.now() + 60 * 1000 * 10 * 60 * 3);
@@ -31,6 +32,7 @@ export async function login(formData: FormData) {
 
   // Save the session in a cookie
   cookies().set("session", session, { expires, httpOnly: true });
+  return true;
 }
 
 export async function logout() {
