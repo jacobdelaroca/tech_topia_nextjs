@@ -31,14 +31,14 @@ export default function RootLayout({
     backgroundImage: `url(${desktopBG.src})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundPosition: '30% center',
+    // backgroundPosition: '30% center',
     backgroundAttachment: "fixed"
   };
   return (
     <html lang="en">
       <body
       style={BGStyle}
-        className={`${teachers.className} antialiased bg-orange-50 lg:bg-bottom`}
+        className={`${teachers.className} antialiased bg-orange-50 lg:bg-bottom bg-left-bottom`}
       >
         <TopNav></TopNav>
       

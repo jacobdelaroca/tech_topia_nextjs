@@ -35,7 +35,7 @@ const TopNav = () => {
         </Link>
         {navItems.map((item, i)=> (
             <Link key={i} href={item.href} className={`float-start h-full px-2 flex items-center mx-2 ${(i === selectedId)? "text-black rounded-t-xl bg-accent2":"text-white"}`} onClick={() => setSelectedId(i)}>
-            <div className="lg:text-3xl text-xl float-start">{item.text}</div>
+            <div className="lg:text-3xl text-lg float-start">{item.text}</div>
             </Link>
         ))}
         {/* <button onClick={() => setCount(c => c+1)}>asdhasldhlasd</button>
