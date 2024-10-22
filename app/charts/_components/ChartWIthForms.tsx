@@ -21,8 +21,8 @@ const ChartWIthForms = ({ items, table }: { items: { name: string, id: number }[
     return (
         <div className=''>
             <h1 className='lg:text-4xl text-3xl text-center mt-10'>{table.toUpperCase()} History</h1>
-            <div className='grid lg:grid-cols-10 grid-cols-1 p-2'>
-                <div className='col-span-1'></div>
+            <div className='grid lg:grid-cols-9 grid-cols-1 p-2'>
+                {/* <div className='col-span-1'></div> */}
                 <div className='col-span-2 flex flex-col p-6 text-2xl'>
                     <label htmlFor="dropdown" className='text-3xl py-3'>Choose {table}:</label>
                     <div className='border-2 border-main p-2 w-full'>
@@ -33,7 +33,7 @@ const ChartWIthForms = ({ items, table }: { items: { name: string, id: number }[
                     </div>
                     <input className='max-w-[] my-5 p-2' type="date" name="" id="" value={date} onChange={e => setDate(e.target.value)} />
                 </div>
-                <div className='bg-white rounded-md col-span-6 h-[30vh] p-2 shadow-lg'>
+                <div className='bg-white rounded-md col-span-7 h-[30vh] p-2 shadow-lg'>
                     <ResponsiveContainer>
                         <LineChart width={1500} height={500} data={data} className=''
                             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>

@@ -27,7 +27,10 @@ export default async function middleware(req: NextRequest) {
             }
         }
     }
-    if(req.nextUrl.pathname.startsWith("/admin/dashboard")){
+    if(req.nextUrl.pathname.startsWith("/admin")){
+        if(req.nextUrl.pathname.startsWith("/admin/credentials") || req.nextUrl.pathname.startsWith("/admin/unauthorized")){
+            return res;
+        }
         const session = await getSession();
         // check validity here
         // console.log(session);

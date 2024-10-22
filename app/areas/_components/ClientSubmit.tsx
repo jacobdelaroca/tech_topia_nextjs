@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import useGeoLocation from '../_hooks/useGeolocation';
 import { stringify } from 'querystring';
 import { useRouter } from 'next/navigation';
@@ -23,6 +23,7 @@ interface location{
 
 
 const ClientSubmit: React.FC<Props> = ({routes, areaId}) => {
+  const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
     const location: location = useGeoLocation();
     const submitForm = async (event: FormEvent<HTMLFormElement>) => {
@@ -69,6 +70,11 @@ const ClientSubmit: React.FC<Props> = ({routes, areaId}) => {
 
   return (
     <div className='flex h-full justify-center items-center flex-col'>
+      {loading && <div>
+        <h1>
+          Sending Request, Please Wait
+        </h1>
+        </div>}
       {routes && routes.map((route: any) => {
         console.log(route);
         return(
@@ -76,7 +82,7 @@ const ClientSubmit: React.FC<Props> = ({routes, areaId}) => {
                 <input type="hidden" name="areaId"  value={areaId}/>
                 <input type="hidden" name="routeId" value={route.route_id}/>
                 <div className='border-2 border-main w-2/3 p-2 m-2'>
-                  <input type="submit" value={route.route_name} className='w-full h-12 border bg-main'/>
+                  <input type="submit" value={route.route_name} onClick={() => setLoading(true)} className='w-full h-12 border bg-main'/>
 
                 </div>
             </form>

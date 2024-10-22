@@ -43,15 +43,15 @@ const Automate = () => {
     }, [areas])
 
     return (
-    <div>
+    <div className='grid grid-cols-2 gap-3 bg-orange-100 p-10'>
         {routes.map(route => {
             return <div key={route.id}>
-                <button className='w-36 h-24 border' onClick={() => setRouteId(route.id)}>Simulate {route.name}</button>
+                <button className=' w-full border border-main p-4 text-xl' onClick={() => setRouteId(route.id)}>Simulate {route.name}</button>
             </div>
         })}
-        <button  className='w-36 h-24 border' onClick={() => clearPassReq()}>Delete all passenger request</button>
-        <button  className='w-36 h-24 border' onClick={() => {setRouteId(0)}}>Stop automatic request</button>
-        <button className='w-36 h-24 border' onClick={() => generateRandomData()}>generate</button>
+        <button  className='border border-main p-4 text-xl' onClick={() => clearPassReq()}>Delete all passenger request</button>
+        <button  className='border border-main p-4 text-xl' onClick={() => {setRouteId(0)}}>Stop automatic request</button>
+        <button className='border border-main p-4 text-xl' onClick={() => generateRandomData()}>generate</button>
     </div>
   )
 }
