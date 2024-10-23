@@ -7,7 +7,14 @@ const ItemEditRow = ({table, itemDetail, updateFunc, deleteFunc}: {table: any, i
     const [lng, setLng] = useState<string>(itemDetail.lng);
     return (
     <div className='my-1 text-md'>
-        <form className="grid grid-cols-5 my-1" action={(e: FormData) => {UpdateItem(e); updateFunc()}}>
+        <form className="grid grid-cols-5 my-1" action={(e: FormData) => {
+            if(name.trim() === "" || lat.trim() === "" || lng.trim() === ""){
+                alert("invalid data");
+                return;
+            }
+            UpdateItem(e); 
+            updateFunc();
+            }}>
             <input className='px-2 col-span-2' name='name' type="text"  value={name} onChange={e => setName(e.target.value)}/>
             <input className='px-2' name='lat' type="number"  value={lat} onChange={e => setLat(e.target.value)}/>
             <input className='px-2' name='lng' type="number"  value={lng} onChange={e => setLng(e.target.value)}/>

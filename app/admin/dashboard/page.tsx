@@ -9,7 +9,12 @@ const Admin = () => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const data = new FormData(form);
+    if(data.get("name") === "" || data.get("lat") === "" || data.get("lng") === "" ){
+      alert("invalid data");
+      return;
+    }
     await action(data);
+    updateData();
     form.reset();
 
   }
@@ -40,7 +45,7 @@ const Admin = () => {
       <div className='p-2 flex flex-row items-stretch justify-center'>
         <div className='flex flex-col w-[30%]'>
           <div className='border-2 border-main p-5 m-2 rounded-md shadow-lg bg-white'>
-            <form className='p-12 py-2  flex-1 justify-center items-center' onSubmit={(e) => { submitForm(e, addRoute); updateData() }}>
+            <form className='p-12 py-2  flex-1 justify-center items-center' onSubmit={(e) => { submitForm(e, addRoute) }}>
               <h3 className='text-3xl text-center'>Add Route</h3>
               <h3 className='text-2xl'>Name</h3>
               <input className='border border-main rounded-md p-3 h-12 w-full mb-6' type="text" name="name" id="" />
@@ -53,7 +58,7 @@ const Admin = () => {
 
           </div>
           <div className='border-2 border-main p-5 m-2 rounded-md shadow-lg bg-white'>
-            <form className='p-12 py-2  flex-1 justify-center items-center' onSubmit={(e) => { submitForm(e, addArea); updateData() }}>
+            <form className='p-12 py-2  flex-1 justify-center items-center' onSubmit={(e) => { submitForm(e, addArea) }}>
               <h3 className='text-3xl text-center'>Add Area</h3>
               <h3 className='text-2xl'>Name</h3>
               <input className='border border-main rounded-md p-3 h-12 w-full mb-6' type="text" name="name" id="" />
@@ -69,9 +74,9 @@ const Admin = () => {
         <div className='flex flex-col justify-between items-stretch w-[65%]'>
           <div className='text-xl m-2 h-full bg-white border-2 border-main rounded-md p-2'>
             <h2 className='text-3xl text-center'>Add area to route</h2>
-            <form className='flex justify-evenly items-center px-6 my-2 ' onSubmit={(e) => { submitForm(e, addAreaToRoute); updateData() }}>
+            <form className='flex justify-evenly items-center px-6 my-2 ' onSubmit={(e) => { submitForm(e, addAreaToRoute)}}>
               <div className='w-[40%]'>
-                <label htmlFor="dropdown1" className='text-2xl p-2'>Ruote:</label>
+                <label htmlFor="dropdown1" className='text-2xl p-2'>Route:</label>
                 <select id="dropdown1" className='p-2 px-3 text-2xl' name="route" value={routeToAdd} onChange={(e) => { setRouteToAdd(Number(e.target.value)) }}>
                   <option value="" >Select an option</option>
                   {routes.map((route, index) => (

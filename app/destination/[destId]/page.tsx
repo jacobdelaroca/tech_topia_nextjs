@@ -6,6 +6,7 @@ import BackgroundMobile from '@/app/_components/BackgroundMobile/BackgroundMobil
 import logo from "@/assets/logo.png";
 import MobileInfoContainer from '@/app/_components/BackgroundMobile/MobileInfoContainer';
 import { redirect } from 'next/navigation';
+import tagline from "@/assets/tagline.png"
 
 const Destination = async ({params}: {params: {destId: string}}) => {
   try{
@@ -25,12 +26,15 @@ const Destination = async ({params}: {params: {destId: string}}) => {
         <h2 className='text-xl mt-6'>
           {route_name[0].name}
         </h2>
-        <div className='py-3'>
-          <MobileInfoContainer title='Route' >
-          <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ex velit vel id iste eum enim pariatur adipisci ea facere!</h1>  
+        <div className='py-3 text-center'>
+          <MobileInfoContainer title='Rates' >
+          <h1>Regular: 13</h1>  
+          <h1>Seniors and Students: 11</h1>  
+          <h1>Every Additional KM: 4</h1>  
           </MobileInfoContainer>
-          <MobileInfoContainer title='Rate' >
-          <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ex velit vel id iste eum enim pariatur adipisci ea facere!</h1>  
+          <MobileInfoContainer title='Be Safe' >
+          <img src={tagline.src} alt=""  className=''/>
+          {/* <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ex velit vel id iste eum enim pariatur adipisci ea facere!</h1>   */}
           </MobileInfoContainer>
         </div>
       </div>

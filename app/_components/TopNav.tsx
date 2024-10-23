@@ -30,7 +30,7 @@ const TopNav = () => {
       };
   return (
     <nav className="h-[96px]  lg:block  p-2  w-screen z-50" style={BGStyle}>
-        <Link href="/" className="float-end" onClick={() => {setSelectedId(navItems.length - 1)}}>
+        <Link href="/" className="float-end" onClick={() => {setSelectedId(0)}}>
         <img src={logo.src} alt="" className="h-16" />
         </Link>
         {navItems.map((item, i)=> (
