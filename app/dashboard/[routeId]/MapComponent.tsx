@@ -4,12 +4,11 @@ import "./styles.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Route } from '@/app/admin/serverActions';
+import { Route } from '../serverActions';
 
 import { DivIcon, Icon, LatLngExpression, divIcon, point } from "leaflet";
 import { MAP_ICON_GRID_WIDTH, OFFSET } from '@/app/_constants/constants';
-import { getRoutesCoord } from './serverActions';
-import { AreaWithRoute, getAreas } from '@/app/admin/automate/serverActions';
+import { getRoutesCoord, AreaWithRoute, getAreas } from './serverActions';
 
 const formatTimeFromISOString = (isoString: string): string => {
   const date = new Date(isoString);
@@ -148,11 +147,11 @@ const Dashboard = ({ params, coords, routes, areasInit }: { params: { routeId: s
 
 
   return (
-    <div className='w-full mt-6 px-2 '>
+    <div className='w-full mt-6 px-2 text-black'>
       <h1 className='text-center text-4xl my-6'>Map Dashboard</h1>
       <div className='flex text-xl flex-col lg:flex-row justify-center'>
-        <div className='flex flex-col text-3xl justify-start p-2 lg:w-[20%] w-full'>
-          <div className='text-3xl border-2 p-4 border-main rounded-md bg-white shadow-lg'>
+        <div className='flex flex-col lg:text-3xl text-2xl justify-start p-2 lg:w-[20%] w-full'>
+          <div className='border-2 p-4 border-main rounded-md bg-white shadow-lg'>
             <h2 className='border-b-2 border-main mb-2 pb-2'>Showing passenger within the last <span className='min-w-32 text-main'>{minutes}</span>  minutes</h2>
             <h2 className='pt-1'>Select minutes</h2>
             <input className='w-full py-4' type="range" name="minutes" id="minute-slider" min={2} max={60} value={minutes} onChange={e => { setMinutes(Number(e.target.value)); }} />

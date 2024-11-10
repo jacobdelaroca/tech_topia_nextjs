@@ -1,16 +1,12 @@
 import React from 'react'
 import Dashboard from './MapComponent'
-import { getSession } from '@/app/lib'
 import { redirect } from 'next/navigation'
 import { checkRouteId, getRoutesCoord } from './serverActions'
-import { getRoutes } from '@/app/admin/serverActions';
-import { getAreas } from '@/app/admin/automate/serverActions'
+import { getRoutes } from '../serverActions'
+import { getAreas } from './serverActions'
 
 const DashboardMain = async ({params}: {params: {routeId: string}}) => {
-  const session: any = await getSession();
-  if(session === null){
-    redirect("/admin/unauthorized");
-  }
+  // const session: any = await getSession();
   console.log(Number(params.routeId.split("-")[0]));
   if(!await checkRouteId(Number(params.routeId.split("-")[0]))) redirect("/error/routeNotFound");
   const coords = await getRoutesCoord(Number(params.routeId.split("-")[0]));

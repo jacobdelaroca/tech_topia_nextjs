@@ -1,6 +1,6 @@
 "use server";
 import { db } from '@/src';
-import { route } from '@/src/db/schema';
+import { area, route, routesToAreas } from '@/src/db/schema';
 import { eq } from 'drizzle-orm';
 
 export const getRoutesCoord = async (routeId: number) => {
@@ -14,3 +14,26 @@ export const checkRouteId = async (routeId: number) => {
     return (routeItem.length > 0); 
 }
 
+export const getAreas = async (routeId:number) => {
+    const areasAssociation = await db.select()
+    .from(area)
+    .fullJoin(routesToAreas, eq(area.id, routesToAreas.areaId))
+    .where(eq(routesToAreas.routeId, routeId))
+    // const routesWithAreas = reduceRoutes(areasAssociation);
+    // console.log(JSON.stringify(routesWithAreas));
+    // console.log(areasAssociation);
+    return areasAssociation;
+}
+
+export interface Area {
+    id: number;
+    name: string;
+    lat: string;
+    lng: string;
+  }
+
+export interface AreaWithRoute
+{
+    area: Area | null,
+    routes_to_areas: { routeId: number, areaId: number } | null
+}
