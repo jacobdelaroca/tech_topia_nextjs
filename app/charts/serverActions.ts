@@ -49,19 +49,19 @@ export async function getHourlyRequestCounts(date: string, Id: number, table: st
 // Usage example:
 
 const areaIds = [38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71];
-const routeIds = [32, 34, 35, 36];
+const routeIds = [32, 34, 35, 36, 50, 48, 49];
 
 // Function to generate random data for the last 2 months
 export async function generateRandomData() {
     const now = new Date();
-    //   const startDate = subHours(now, 60 * 24 * 2); // 2 months ago
-    const startDate = subHours(now, 48); // 2 months ago
+      const startDate = subHours(now, 60 * 24); // 2 months ago
+    // const startDate = subHours(now, 48); // 2 months ago
     let currentHour = startOfDay(startDate); // Start from the beginning of the first day
 
     while (currentHour <= now) {
         
         // Generate a random number of requests for this hour (let's say between 1 to 20)
-        const requestCount = Math.floor(Math.random() * 40) + 1;
+        const requestCount = Math.floor(Math.random() * 40) + 40;
         
         const requestsData = Array.from({ length: requestCount }, () => {
             
@@ -76,7 +76,7 @@ export async function generateRandomData() {
             }
         }
         );
-        // console.log(requestsData);
+        console.log(currentHour);
 
         // Insert into the passengerNotifTable
         await db.insert(passengerNotifTable).values(requestsData).execute();
